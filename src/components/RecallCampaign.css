@@ -1,0 +1,257 @@
+.recall-campaign-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.page-header {
+  background: white;
+  border-bottom: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.header-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.nav-tabs-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+.nav-tabs .nav-link {
+  color: #6c757d;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: #0d6efd;
+  background-color: #f8f9fa;
+}
+
+.nav-tabs .nav-link.active {
+  color: #0d6efd;
+  background-color: transparent;
+  border-color: transparent transparent #0d6efd;
+}
+
+.stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.stat-card h2 {
+  font-size: 2.5rem;
+  color: #212529;
+}
+
+.campaign-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: white;
+}
+
+.campaign-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+.campaign-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.detail-item {
+  margin-bottom: 1rem;
+}
+
+.detail-item strong {
+  display: block;
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.detail-item p {
+  color: #212529;
+  font-weight: 500;
+}
+
+.progress-bar-custom {
+  height: 8px;
+  border-radius: 4px;
+  background-color: #e9ecef;
+}
+
+.progress-bar-custom .progress-bar {
+  border-radius: 4px;
+}
+
+/* Badge styles */
+.badge {
+  padding: 0.35rem 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* Button styles */
+.btn {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .page-header .btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .stat-card h2 {
+    font-size: 2rem;
+  }
+
+  .campaign-card .card-body {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Modal Styles */
+.modal-header {
+  padding: 1.5rem 1.5rem 1rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.modal-body {
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-backdrop.show {
+  opacity: 0.6;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.form-control::placeholder {
+  color: #adb5bd;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn-light {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.btn-light:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #495057;
+}
+
+@media (max-width: 576px) {
+  .header-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .page-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .page-header .small {
+    font-size: 0.75rem !important;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .nav-tabs .nav-link svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}

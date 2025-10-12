@@ -1,0 +1,184 @@
+.notifications-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding-top: 2rem;
+}
+
+.filter-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.notifications-list {
+  position: relative;
+}
+
+.notification-card {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: white;
+  border-left: 4px solid transparent !important;
+}
+
+.notification-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+.notification-card.notification-new {
+  background: linear-gradient(to right, #f0f7ff 0%, #ffffff 100%);
+  border-left: 4px solid #0d6efd !important;
+}
+
+.notification-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.notification-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #212529;
+  line-height: 1.4;
+}
+
+.notification-new .notification-title {
+  color: #0d6efd;
+}
+
+.notification-message {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 0.5rem;
+  color: #495057;
+}
+
+.notification-footer {
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.notification-actions {
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.notification-actions .btn-link {
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.notification-actions .btn-link:hover {
+  opacity: 1;
+}
+
+/* Badge styles */
+.badge {
+  padding: 0.35rem 0.75rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Button styles */
+.btn {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+  border-color: #dee2e6;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #495057;
+}
+
+.btn-outline-secondary.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+}
+
+/* Empty state */
+.text-center {
+  color: #6c757d;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification-card {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .notifications-page {
+    padding-top: 1rem;
+  }
+
+  .notification-card .card-body {
+    padding: 1.5rem !important;
+  }
+
+  .notification-title {
+    font-size: 1rem;
+  }
+
+  .notification-message {
+    font-size: 0.875rem;
+  }
+
+  .notification-footer {
+    font-size: 0.8rem;
+  }
+
+  .filter-buttons {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .notification-icon {
+    font-size: 1.25rem;
+  }
+
+  .d-flex.justify-content-between.align-items-start {
+    flex-direction: column;
+  }
+
+  .notification-actions {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    align-self: flex-end;
+  }
+}
