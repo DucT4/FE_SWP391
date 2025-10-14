@@ -1,0 +1,168 @@
+.history-container {
+   min-height: 100vh;
+  background-color: #f8f9fa;
+  padding-top: 2rem;
+}
+
+/* --- Bộ lọc --- */
+/* --- Bộ lọc --- */
+.filter-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.filter-bar>div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.filter-bar p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.search-input,
+.filter-select {
+    height: 38px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus,
+.filter-select:focus {
+    border-color: #007bff;
+}
+
+.filter-select {
+    background-color: #fff;
+}
+
+
+/* --- Tabs --- */
+.tab-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.tab-btn.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* --- Danh sách yêu cầu --- */
+.request-list {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* --- Card yêu cầu --- */
+.request-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.2s;
+}
+
+.request-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.req-id {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.req-category {
+    font-size: 12px;
+    color: #666;
+    margin-left: 8px;
+}
+
+.status {
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    margin-right: 8px;
+}
+
+.status-approved {
+    background-color: #e9f7ef;
+    color: #2e8b57;
+}
+
+.status-processing {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+}
+
+.status-pending {
+    background-color: #fff7e6;
+    color: #f5a623;
+}
+
+.req-info .car {
+    font-weight: 600;
+    color: #333;
+}
+
+.note {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.meta p {
+    font-size: 13px;
+    color: #555;
+    margin: 2px 0;
+}
+
+.view-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.footer-text {
+    text-align: right;
+    color: #888;
+    font-size: 13px;
+    margin-top: 10px;
+}

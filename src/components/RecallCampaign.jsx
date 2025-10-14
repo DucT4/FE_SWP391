@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Container, Row, Col, Card, Nav, Badge, ProgressBar, Button, Modal, Form, Dropdown } from 'react-bootstrap';
-import { 
-  ExclamationTriangle, 
-  FileText, 
-  Bell, 
-  Search, 
+import {
+  ExclamationTriangle,
+  FileText,
+  Bell,
+  Search,
   ClockHistory,
   Plus,
   CarFrontFill,
@@ -16,6 +16,9 @@ import RecallOrders from './RecallOrders';
 import Notifications from './Notifications';
 import authService from '../services/authService';
 import './RecallCampaign.css';
+import History from './History';
+import Lookup from './Lookup';
+import Inventory from './Inventory';
 
 function RecallCampaign({ onLogout, userRole }) {
   const [activeTab, setActiveTab] = useState('recall');
@@ -154,8 +157,8 @@ function RecallCampaign({ onLogout, userRole }) {
               <div>
                 <h1 className="mb-0">Hệ thống bảo hành xe điện</h1>
                 <p className="text-muted mb-0 small">
-                  {authService.getCurrentUser()?.username || 'User'} • 
-                  {userRole?.replace('ROLE_', '').replace('_', ' ') || 'Role'} • 
+                  {authService.getCurrentUser()?.username || 'User'} •
+                  {userRole?.replace('ROLE_', '').replace('_', ' ') || 'Role'} •
                   Trung tâm Hà Nội
                 </p>
               </div>
@@ -212,6 +215,12 @@ function RecallCampaign({ onLogout, userRole }) {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
+              <Nav.Link eventKey="inventory" className="d-flex align-items-center gap-2">
+                <Search size={18} />
+                Kho hàng
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link eventKey="history" className="d-flex align-items-center gap-2">
                 <ClockHistory size={18} />
                 Lịch sử
@@ -241,74 +250,74 @@ function RecallCampaign({ onLogout, userRole }) {
           {/* Campaigns Section */}
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h3 className="mb-0">Chiến dịch Recall</h3>
-            <Button 
-            variant="dark" 
-            className="d-flex align-items-center gap-2"
-            onClick={() => setShowCreateModal(true)}
-          >
-            <Plus size={20} />
-            Tạo chiến dịch mới
-          </Button>
-        </div>
+            <Button
+              variant="dark"
+              className="d-flex align-items-center gap-2"
+              onClick={() => setShowCreateModal(true)}
+            >
+              <Plus size={20} />
+              Tạo chiến dịch mới
+            </Button>
+          </div>
 
-        {/* Campaign Cards */}
-        <Row>
-          {campaigns.map((campaign) => (
-            <Col key={campaign.id} xs={12} className="mb-4">
-              <Card className="campaign-card border-0 shadow-sm h-100">
-                <Card.Body className="p-4">
-                  {/* Header */}
-                  <div className="d-flex justify-content-between align-items-start mb-3">
-                    <div className="d-flex align-items-center gap-3">
-                      <div className={`campaign-icon bg-${getStatusBadge(campaign.status)} bg-opacity-10`}>
-                        <ExclamationTriangle className={`text-${getStatusBadge(campaign.status)}`} size={24} />
-                      </div>
-                      <div>
-                        <h5 className="mb-1">{campaign.title}</h5>
-                        <div className="d-flex align-items-center gap-2">
-                          <Badge bg={getStatusBadge(campaign.status)}>{campaign.statusText}</Badge>
-                          <Badge bg="secondary" className="fw-normal">{campaign.type}</Badge>
+          {/* Campaign Cards */}
+          <Row>
+            {campaigns.map((campaign) => (
+              <Col key={campaign.id} xs={12} className="mb-4">
+                <Card className="campaign-card border-0 shadow-sm h-100">
+                  <Card.Body className="p-4">
+                    {/* Header */}
+                    <div className="d-flex justify-content-between align-items-start mb-3">
+                      <div className="d-flex align-items-center gap-3">
+                        <div className={`campaign-icon bg-${getStatusBadge(campaign.status)} bg-opacity-10`}>
+                          <ExclamationTriangle className={`text-${getStatusBadge(campaign.status)}`} size={24} />
+                        </div>
+                        <div>
+                          <h5 className="mb-1">{campaign.title}</h5>
+                          <div className="d-flex align-items-center gap-2">
+                            <Badge bg={getStatusBadge(campaign.status)}>{campaign.statusText}</Badge>
+                            <Badge bg="secondary" className="fw-normal">{campaign.type}</Badge>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Description */}
-                  <p className="text-muted mb-3">{campaign.description}</p>
+                    {/* Description */}
+                    <p className="text-muted mb-3">{campaign.description}</p>
 
-                  {/* Details */}
-                  <Row className="mb-3">
-                    <Col md={6}>
-                      <div className="detail-item">
-                        <strong>Dòng xe ảnh hưởng</strong>
-                        <p className="mb-0">{campaign.vehicles}</p>
+                    {/* Details */}
+                    <Row className="mb-3">
+                      <Col md={6}>
+                        <div className="detail-item">
+                          <strong>Dòng xe ảnh hưởng</strong>
+                          <p className="mb-0">{campaign.vehicles}</p>
+                        </div>
+                      </Col>
+                      <Col md={6}>
+                        <div className="detail-item">
+                          <strong>Năm sản xuất</strong>
+                          <p className="mb-0">{campaign.years}</p>
+                        </div>
+                      </Col>
+                    </Row>
+
+                    {/* Progress */}
+                    <div>
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <strong>Tiến độ thực hiện</strong>
+                        <span className="text-muted">{campaign.completed} / {campaign.total} xe</span>
                       </div>
-                    </Col>
-                    <Col md={6}>
-                      <div className="detail-item">
-                        <strong>Năm sản xuất</strong>
-                        <p className="mb-0">{campaign.years}</p>
-                      </div>
-                    </Col>
-                  </Row>
-
-                  {/* Progress */}
-                  <div>
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <strong>Tiến độ thực hiện</strong>
-                      <span className="text-muted">{campaign.completed} / {campaign.total} xe</span>
+                      <ProgressBar
+                        now={campaign.progress}
+                        variant={getStatusBadge(campaign.status)}
+                        className="progress-bar-custom"
+                      />
                     </div>
-                    <ProgressBar 
-                      now={campaign.progress} 
-                      variant={getStatusBadge(campaign.status)}
-                      className="progress-bar-custom"
-                    />
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </Container>
       )}
 
@@ -319,23 +328,15 @@ function RecallCampaign({ onLogout, userRole }) {
       {activeTab === 'notifications' && <Notifications />}
 
       {/* Placeholder for other tabs */}
-      {activeTab === 'search' && (
-        <Container className="py-4">
-          <h3>Tra cứu bảo hành</h3>
-          <p>Trang tra cứu đang được phát triển...</p>
-        </Container>
-      )}
+      {activeTab === 'search' && <Lookup />}
 
-      {activeTab === 'history' && (
-        <Container className="py-4">
-          <h3>Lịch sử</h3>
-          <p>Trang lịch sử đang được phát triển...</p>
-        </Container>
-      )}
+      {activeTab === 'history' && <History />}
+
+      {activeTab === 'inventory' && <Inventory />}
 
       {/* Create Campaign Modal */}
-      <Modal 
-        show={showCreateModal} 
+      <Modal
+        show={showCreateModal}
         onHide={handleCloseModal}
         size="lg"
         centered
@@ -345,7 +346,7 @@ function RecallCampaign({ onLogout, userRole }) {
         </Modal.Header>
         <Modal.Body className="pt-2">
           <p className="text-muted mb-4">Điền thông tin để tạo chiến dịch Recall mới</p>
-          
+
           <Form onSubmit={handleCreateCampaign}>
             {/* Tiêu đề chiến dịch */}
             <Form.Group className="mb-3">
@@ -494,15 +495,15 @@ function RecallCampaign({ onLogout, userRole }) {
 
             {/* Buttons */}
             <div className="d-flex justify-content-end gap-2 mt-4">
-              <Button 
-                variant="light" 
+              <Button
+                variant="light"
                 onClick={handleCloseModal}
                 className="px-4"
               >
                 Hủy
               </Button>
-              <Button 
-                variant="dark" 
+              <Button
+                variant="dark"
                 type="submit"
                 className="px-4"
               >
