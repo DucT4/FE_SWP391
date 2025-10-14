@@ -1,0 +1,23 @@
+.lookup-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding-top: 2rem;
+}
+
+.search-border {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+.search-input {
+    height: 38px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    flex: 1;
+}

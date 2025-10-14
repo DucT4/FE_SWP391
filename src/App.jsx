@@ -3,6 +3,7 @@ import Login from './components/Login'
 import RecallCampaign from './components/RecallCampaign'
 import authService from './services/authService'
 import './App.css'
+import History from './components/History'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -81,6 +82,12 @@ function App() {
     console.log('✅ Điều hướng đến RecallCampaign cho EVM_STAFF');
     // Tạm thời hiển thị RecallCampaign, sau này sẽ tạo trang riêng cho EVM
     return <RecallCampaign onLogout={handleLogout} userRole={userRole} />
+  }
+
+  if (userRole === 'ROLE_EVM_STAFF' || userRole === 'EVM_STAFF') {
+    console.log('✅ Điều hướng đến RecallCampaign cho EVM_STAFF');
+    // Tạm thời hiển thị RecallCampaign, sau này sẽ tạo trang riêng cho EVM
+    return <History onLogout={handleLogout} userRole={userRole} />
   }
 
   // Không có role hợp lệ => logout
