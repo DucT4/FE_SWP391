@@ -1,0 +1,176 @@
+/* SC Staff Dashboard Layout */
+.sc-staff-dashboard {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* Header Section */
+.sc-staff-header {
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sc-staff-header > div {
+  flex: 1;
+}
+
+.sc-staff-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.sc-staff-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6c757d;
+  font-size: 0.95rem;
+  margin: 0;
+  margin-top: 0.25rem;
+}
+
+/* Logout Button */
+.btn-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: white;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn-logout:hover {
+  background: #dc3545;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+}
+
+/* Navigation Tabs */
+.sc-staff-nav-tabs {
+  background: white;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 0 2rem;
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.sc-staff-nav-tabs .nav-link {
+  border: none;
+  background: transparent;
+  color: #6c757d;
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.sc-staff-nav-tabs .nav-link:hover {
+  color: #0d6efd;
+  background-color: #f8f9fa;
+}
+
+.sc-staff-nav-tabs .nav-link.active {
+  color: #0d6efd;
+  border-bottom-color: #0d6efd;
+  background: transparent;
+}
+
+.sc-staff-nav-tabs .nav-link svg {
+  stroke-width: 2;
+}
+
+/* Content Area */
+.sc-staff-content {
+  padding: 2rem;
+  min-height: calc(100vh - 180px);
+}
+
+.sc-staff-content .tab-pane {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sc-staff-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .sc-staff-header > div {
+    width: 100%;
+  }
+
+  .btn-logout {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sc-staff-nav-tabs {
+    padding: 0 1rem;
+    gap: 0.5rem;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .sc-staff-nav-tabs .nav-link {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .sc-staff-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .sc-staff-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .sc-staff-info {
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .sc-staff-nav-tabs .nav-link {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .sc-staff-nav-tabs .nav-link svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { Button, Table, Form, Row, Col, Card, Container } from "react-bootstrap";
+import { Button, Table, Form, Row, Col, Card, Container, Modal } from "react-bootstrap";
 import { Pencil, Trash, Plus } from "lucide-react";
-import "./Inventory.css";
+import "../../styles/Inventory.css";
 
 const Inventory = () => {
     const [search, setSearch] = useState("");
     const [filterType, setFilterType] = useState("Tất cả");
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [formData, setFormData] = useState({
+        code: "",
+        name: "",
+        type: "Pin",
+        quantity: "",
+        minStock: "",
+        price: "",
+    });
 
     const parts = [
         {
@@ -74,11 +83,41 @@ const Inventory = () => {
 
     const totalValue = parts.reduce((sum, p) => sum + p.total, 0);
 
+    const handleAddPart = () => {
+        setShowAddModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowAddModal(false);
+        setFormData({
+            code: "",
+            name: "",
+            type: "Pin",
+            quantity: "",
+            minStock: "",
+            price: "",
+        });
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Add part:", formData);
+        handleCloseModal();
+    };
+
     return (
         <Container className="py-4 inventory-container">
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h4>Quản lý kho hàng - Trung tâm</h4>
-                <Button variant="dark">
+                <Button variant="dark" onClick={handleAddPart}>
                     <Plus size={16} /> Thêm linh kiện mới
                 </Button>
             </div>
@@ -193,6 +232,132 @@ const Inventory = () => {
                     </p>
                 </Card.Body>
             </Card>
+
+            {/* Add Part Modal */}
+            <Modal show={showAddModal} onHide={handleCloseModal} size="lg" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Thêm linh kiện mới</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p className="text-muted mb-3">
+                        Điền thông tin để thêm linh kiện mới vào kho
+                    </p>
+                    <Form onSubmit={handleSubmit}>
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        Mã linh kiện <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="code"
+                                        value={formData.code}
+                                        onChange={handleInputChange}
+                                        placeholder="VD: BMS-VF8-001"
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        Tên linh kiện <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleInputChange}
+                                        placeholder="Nhập tên linh kiện"
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        Loại linh kiện <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Select
+                                        name="type"
+                                        value={formData.type}
+                                        onChange={handleInputChange}
+                                        required
+                                    >
+                                        <option value="Pin">Pin</option>
+                                        <option value="Điện">Điện</option>
+                                        <option value="Cơ khí">Cơ khí</option>
+                                        <option value="Nội thất">Nội thất</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        Số lượng <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="quantity"
+                                        value={formData.quantity}
+                                        onChange={handleInputChange}
+                                        placeholder="Nhập số lượng"
+                                        min="0"
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        Tồn tối thiểu <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="minStock"
+                                        value={formData.minStock}
+                                        onChange={handleInputChange}
+                                        placeholder="Nhập tồn tối thiểu"
+                                        min="0"
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>
+                                        Đơn giá (VNĐ) <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="price"
+                                        value={formData.price}
+                                        onChange={handleInputChange}
+                                        placeholder="Nhập đơn giá"
+                                        min="0"
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Hủy
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Thêm linh kiện
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Modal, Form } from 'react-bootstrap';
 import { FileText, Plus, X } from 'react-bootstrap-icons';
-import './RecallOrders.css';
+import '../../styles/RecallOrders.css';
 
 function RecallOrders() {
   const [showCreateModal, setShowCreateModal] = useState(false);

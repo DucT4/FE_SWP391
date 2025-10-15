@@ -1,7 +1,7 @@
 import { Badge, Card, Col, Container, Row } from "react-bootstrap";
-import "./Lookup.css";
+import "../../styles/Lookup.css";
 import { useState } from "react";
-import api from "../config/apiConfig";
+import api from "../../config/apiConfig";
 
 export default function Lookup() {
     const [keyWord, setKeyWord] = useState("");

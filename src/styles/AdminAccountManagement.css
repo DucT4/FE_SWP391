@@ -1,0 +1,173 @@
+/* Account Management Styles */
+.admin-account-management {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.admin-account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.admin-account-header h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.btn-create-account {
+  background-color: #212529;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+
+.btn-create-account:hover {
+  background-color: #000;
+  color: white;
+}
+
+/* Account List */
+.account-list-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+}
+
+.account-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.account-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #dee2e6;
+}
+
+.account-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.account-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  margin-right: 0.75rem;
+}
+
+.account-role-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background-color: #212529;
+  color: white;
+}
+
+.account-status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.account-status-badge.active {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.account-status-badge.inactive {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.account-info {
+  display: flex;
+  gap: 1.5rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.account-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.account-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.account-actions .btn {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Empty State */
+.account-empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+}
+
+.account-empty-state svg {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-account-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .account-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .account-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .account-actions {
+    width: 100%;
+  }
+
+  .account-actions .btn {
+    flex: 1;
+  }
+}

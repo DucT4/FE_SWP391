@@ -1,0 +1,306 @@
+/* Assigned Work (Công việc đã phân công) for Manager */
+.manager-assigned-work-container {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.manager-assigned-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.manager-assigned-header h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.manager-assigned-subtitle {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Filter Section */
+.manager-assigned-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* Stats Cards */
+.manager-assigned-stats {
+  margin-bottom: 2rem;
+}
+
+.manager-assigned-stat-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.manager-assigned-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.manager-assigned-stat-card h6 {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.manager-assigned-stat-card .stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #212529;
+  line-height: 1;
+}
+
+/* Work Card */
+.manager-assigned-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.manager-assigned-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #dee2e6;
+}
+
+.manager-assigned-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.manager-assigned-id {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.manager-assigned-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.manager-assigned-status.assigned {
+  background-color: #fff3cd;
+  color: #997404;
+}
+
+.manager-assigned-status.in-progress {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.manager-assigned-status.completed {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.manager-assigned-status.paused {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.manager-assigned-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.manager-assigned-subtitle {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.manager-assigned-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.manager-assigned-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.manager-assigned-detail-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.manager-assigned-detail-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.manager-assigned-detail-value.highlight {
+  color: #198754;
+  font-weight: 600;
+}
+
+.manager-assigned-technician {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.technician-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.technician-info {
+  flex: 1;
+}
+
+.technician-name {
+  font-weight: 600;
+  color: #212529;
+  font-size: 0.9rem;
+}
+
+.technician-role {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+/* Progress Bar */
+.work-progress {
+  margin-top: 1rem;
+}
+
+.work-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.work-progress-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.work-progress-fill {
+  height: 100%;
+  background-color: #0d6efd;
+  transition: width 0.3s ease;
+}
+
+/* Action Buttons */
+.manager-assigned-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.manager-assigned-actions .btn {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Empty State */
+.manager-assigned-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+}
+
+.manager-assigned-empty svg {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.manager-assigned-empty h5 {
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .manager-assigned-details {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-assigned-actions {
+    flex-direction: column;
+  }
+
+  .manager-assigned-stat-card .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .manager-assigned-filters {
+    flex-direction: column;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+}
