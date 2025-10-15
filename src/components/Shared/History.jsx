@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./History.css";
+import "../../styles/History.css";
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
-import api from "../config/apiConfig";
+import api from "../../config/apiConfig";
 
 const History = ({ role }) => {
   const [activeTab, setActiveTab] = useState("warranty");

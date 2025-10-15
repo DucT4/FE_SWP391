@@ -1,0 +1,338 @@
+/* Warranty Lookup (Tra cứu bảo hành) Tab Styles */
+.warranty-lookup-container {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Section */
+.lookup-header {
+  margin-bottom: 2rem;
+}
+
+.lookup-header h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.lookup-header p {
+  color: #6c757d;
+  margin: 0;
+}
+
+/* Search Section */
+.lookup-search-box {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.lookup-search-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.lookup-search-input-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.lookup-search-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.lookup-search-input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.lookup-search-input::placeholder {
+  color: #adb5bd;
+}
+
+.btn-lookup {
+  padding: 0.75rem 2rem;
+  background-color: #212529;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-lookup:hover {
+  background-color: #000;
+  transform: translateY(-1px);
+}
+
+.btn-lookup:active {
+  transform: translateY(0);
+}
+
+/* Result Section */
+.lookup-result-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: white;
+}
+
+.lookup-result-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.lookup-part-code {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.lookup-part-name {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.lookup-part-description {
+  color: #495057;
+  line-height: 1.6;
+}
+
+/* Info Cards */
+.lookup-info-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.lookup-info-card h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lookup-info-card h6 svg {
+  color: #198754;
+}
+
+.lookup-info-item {
+  margin-bottom: 0.75rem;
+}
+
+.lookup-info-label {
+  font-weight: 500;
+  color: #495057;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.lookup-info-value {
+  font-weight: 600;
+  color: #212529;
+}
+
+.lookup-info-value.highlight {
+  color: #198754;
+}
+
+/* Lists */
+.lookup-list {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+}
+
+.lookup-list li {
+  color: #495057;
+  line-height: 1.8;
+  margin-bottom: 0.25rem;
+}
+
+.lookup-list-title {
+  font-weight: 600;
+  color: #212529;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Compatible Cars Badges */
+.compatible-cars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.car-badge {
+  background-color: #e7f3ff;
+  color: #0d6efd;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Process Steps */
+.process-steps {
+  list-style: none;
+  counter-reset: step-counter;
+  padding-left: 0;
+}
+
+.process-steps li {
+  counter-increment: step-counter;
+  padding-left: 2.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+  color: #495057;
+  line-height: 1.6;
+}
+
+.process-steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Info Note */
+.lookup-info-note {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  color: #856404;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.lookup-info-note svg {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* Empty State */
+.lookup-empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6c757d;
+}
+
+.lookup-empty-state svg {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  opacity: 0.4;
+}
+
+.lookup-empty-state h5 {
+  color: #495057;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.lookup-empty-state p {
+  color: #6c757d;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Loading State */
+.lookup-loading {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.lookup-loading .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
+}
+
+.lookup-loading p {
+  margin-top: 1rem;
+  color: #6c757d;
+}
+
+/* Error State */
+.lookup-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+  padding: 1.25rem;
+  color: #842029;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lookup-error svg {
+  flex-shrink: 0;
+  color: #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .warranty-lookup-container {
+    padding: 1rem;
+  }
+
+  .lookup-search-input-group {
+    flex-direction: column;
+  }
+
+  .btn-lookup {
+    width: 100%;
+  }
+
+  .lookup-info-card {
+    margin-bottom: 1rem;
+  }
+
+  .process-steps li {
+    padding-left: 2rem;
+  }
+
+  .process-steps li::before {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+  }
+}

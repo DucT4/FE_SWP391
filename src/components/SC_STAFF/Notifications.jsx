@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Card, Badge, Button } from 'react-bootstrap';
 import { Bell, BellFill, Trash } from 'react-bootstrap-icons';
-import './Notifications.css';
+import '../../styles/Notifications.css';
 
 function Notifications() {
   const [notifications, setNotifications] = useState([

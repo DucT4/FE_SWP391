@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner, InputGroup } from 'react-bootstrap';
 import { Eye, EyeSlash, Telephone, Envelope, CarFrontFill } from 'react-bootstrap-icons';
 import authService from '../services/authService';
-import './Login.css';
+import '../styles/Login.css';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');

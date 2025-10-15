@@ -14,11 +14,10 @@ import {
 } from 'react-bootstrap-icons';
 import RecallOrders from './RecallOrders';
 import Notifications from './Notifications';
-import authService from '../services/authService';
-import './RecallCampaign.css';
-import History from './History';
-import Lookup from './Lookup';
-import Inventory from './Inventory';
+import authService from '../../services/authService';
+import '../../styles/RecallCampaign.css';
+import History from '../Shared/History';
+import Lookup from '../Shared/Lookup';
 
 function RecallCampaign({ onLogout, userRole }) {
   const [activeTab, setActiveTab] = useState('recall');
@@ -331,8 +330,6 @@ function RecallCampaign({ onLogout, userRole }) {
       {activeTab === 'search' && <Lookup />}
 
       {activeTab === 'history' && <History />}
-
-      {activeTab === 'inventory' && <Inventory />}
 
       {/* Create Campaign Modal */}
       <Modal
