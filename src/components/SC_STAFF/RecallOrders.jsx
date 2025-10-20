@@ -6,14 +6,15 @@ import '../../styles/RecallOrders.css';
 function RecallOrders() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [formData, setFormData] = useState({
+    id: '',
     campaignId: '',
     vin: '',
-    model: '',
-    customerName: '',
-    phone: '',
-    technician: '',
+    staffId: '',
+    performedDate: '',
     workDescription: '',
-    requiredParts: ''
+    technicianName: '',
+    createdAt: '',
+    campaignPayments: ''
   });
 
   const stats = [
@@ -76,28 +77,30 @@ function RecallOrders() {
     setShowCreateModal(false);
     // Reset form
     setFormData({
+      id: '',
       campaignId: '',
       vin: '',
-      model: '',
-      customerName: '',
-      phone: '',
-      technician: '',
+      staffId: '',
+      performedDate: '',
       workDescription: '',
-      requiredParts: ''
+      technicianName: '',
+      createdAt: '',
+      campaignPayments: ''
     });
   };
 
   const handleCloseModal = () => {
     setShowCreateModal(false);
     setFormData({
+      id: '',
       campaignId: '',
       vin: '',
-      model: '',
-      customerName: '',
-      phone: '',
-      technician: '',
+      staffId: '',
+      performedDate: '',
       workDescription: '',
-      requiredParts: ''
+      technicianName: '',
+      createdAt: '',
+      campaignPayments: ''
     });
   };
 
@@ -124,14 +127,6 @@ function RecallOrders() {
             <h3 className="mb-1">Đơn Recall</h3>
             <p className="text-muted mb-0">Tạo đơn recall riêng lẻ và phân công cho kỹ thuật viên</p>
           </div>
-          <Button 
-            variant="dark" 
-            className="d-flex align-items-center gap-2"
-            onClick={() => setShowCreateModal(true)}
-          >
-            <Plus size={20} />
-            Tạo đơn Recall
-          </Button>
         </div>
 
         {/* Orders List */}
@@ -212,147 +207,103 @@ function RecallOrders() {
         </Modal.Header>
         <Modal.Body className="pt-2">
           <p className="text-muted mb-4">Tạo đơn recall riêng lẻ cho từng xe và phân công cho kỹ thuật viên</p>
-          
           <Form onSubmit={handleCreateOrder}>
-            {/* Chiến dịch Recall */}
             <Form.Group className="mb-3">
-              <Form.Label>
-                Chiến dịch Recall <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Select
+              <Form.Label>ID</Form.Label>
+              <Form.Control
+                type="number"
+                name="id"
+                value={formData.id}
+                onChange={handleInputChange}
+                placeholder="ID (auto hoặc nhập nếu cần)"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Campaign ID <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="number"
                 name="campaignId"
                 value={formData.campaignId}
                 onChange={handleInputChange}
-                required
-              >
-                <option value="">Chọn chiến dịch...</option>
-                <option value="1">Cập nhật phần mềm hệ thống phanh</option>
-                <option value="2">Kiểm tra hệ thống pin</option>
-                <option value="3">Cập nhật hệ thống điều hòa</option>
-                <option value="4">Thay thế cụm đèn pha</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Row>
-              {/* Số VIN */}
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Số VIN <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="vin"
-                    value={formData.vin}
-                    onChange={handleInputChange}
-                    placeholder="Nhập số VIN"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-
-              {/* Model xe */}
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Model xe <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="model"
-                    value={formData.model}
-                    onChange={handleInputChange}
-                    placeholder="VinFast VF 8"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row>
-              {/* Tên khách hàng */}
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Tên khách hàng <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="customerName"
-                    value={formData.customerName}
-                    onChange={handleInputChange}
-                    placeholder="Nhập tên khách hàng"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-
-              {/* Số điện thoại */}
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Số điện thoại <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="0901234567"
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            {/* Kỹ thuật viên */}
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Kỹ thuật viên <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Select
-                name="technician"
-                value={formData.technician}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Chọn kỹ thuật viên...</option>
-                <option value="Trần Văn B">Trần Văn B - Trung tâm Hà Nội</option>
-                <option value="Nguyễn Văn C">Nguyễn Văn C - Trung tâm Hồ Chí Minh</option>
-                <option value="Lê Văn D">Lê Văn D - Trung tâm Đà Nẵng</option>
-              </Form.Select>
-            </Form.Group>
-
-            {/* Mô tả công việc */}
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Mô tả công việc <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                name="workDescription"
-                value={formData.workDescription}
-                onChange={handleInputChange}
-                placeholder="Mô tả chi tiết công việc cần thực hiện"
+                placeholder="ID chiến dịch liên quan"
                 required
               />
             </Form.Group>
-
-            {/* Linh kiện cần thiết */}
             <Form.Group className="mb-3">
-              <Form.Label>Linh kiện cần thiết</Form.Label>
+              <Form.Label>VIN <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="text"
+                name="vin"
+                value={formData.vin}
+                onChange={handleInputChange}
+                placeholder="Nhập số VIN"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Staff ID <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="number"
+                name="staffId"
+                value={formData.staffId}
+                onChange={handleInputChange}
+                placeholder="ID nhân viên thực hiện"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Ngày thực hiện <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="date"
+                name="performedDate"
+                value={formData.performedDate}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Mô tả công việc <span className="text-danger">*</span></Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}
-                name="requiredParts"
-                value={formData.requiredParts}
+                name="workDescription"
+                value={formData.workDescription}
                 onChange={handleInputChange}
-                placeholder="Nhập danh sách linh kiện cần thiết (nếu có)"
+                placeholder="Nhập mô tả công việc"
+                required
               />
             </Form.Group>
-
-            {/* Buttons */}
+            <Form.Group className="mb-3">
+              <Form.Label>Tên kỹ thuật viên <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="text"
+                name="technicianName"
+                value={formData.technicianName}
+                onChange={handleInputChange}
+                placeholder="Nhập tên kỹ thuật viên"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Ngày tạo</Form.Label>
+              <Form.Control
+                type="datetime-local"
+                name="createdAt"
+                value={formData.createdAt}
+                onChange={handleInputChange}
+                placeholder="Ngày tạo bản ghi (nếu cần)"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Thông tin thanh toán chiến dịch</Form.Label>
+              <Form.Control
+                type="text"
+                name="campaignPayments"
+                value={formData.campaignPayments}
+                onChange={handleInputChange}
+                placeholder="Thông tin thanh toán (nếu có)"
+              />
+            </Form.Group>
             <div className="d-flex justify-content-end gap-2 mt-4">
               <Button 
                 variant="light" 
