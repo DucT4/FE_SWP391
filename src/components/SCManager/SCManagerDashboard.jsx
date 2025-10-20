@@ -11,7 +11,7 @@ import {
 import "../../styles/SCManagerDashboard.css";
 import ManagerWarrantyRequests from "./ManagerWarrantyRequests";
 import ManagerAssignedWork from "./ManagerAssignedWork";
-import History from "../Shared/History";
+import WarrantyHistory from "../Shared/WarrantyHistory";
 import WarrantyLookup from "../SCTechnician/WarrantyLookup";
 import authService from "../../services/authService";
 
@@ -95,8 +95,9 @@ const SCManagerDashboard = ({ onLogout }) => {
               <WarrantyLookup />
             </Tab.Pane>
             <Tab.Pane eventKey="history">
-              <History role="SC_MANAGER" />
-            </Tab.Pane>
+          <WarrantyHistory role="SC_MANAGER" />
+          </Tab.Pane>
+
           </Tab.Content>
         </div>
       </Tab.Container>

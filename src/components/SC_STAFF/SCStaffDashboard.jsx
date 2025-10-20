@@ -12,9 +12,9 @@ import "../../styles/SCStaffDashboard.css";
 import RecallCampaignContent from "./RecallCampaignContent";
 import RecallOrders from "./RecallOrders";
 import Notifications from "./Notifications";
-import Lookup from "../Shared/Lookup";
-import History from "../Shared/History";
+import WarrantyHistory from "../Shared/WarrantyHistory";
 import authService from "../../services/authService";
+import LookupPage from "../LookupPage";
 
 const SCStaffDashboard = ({ onLogout }) => {
   const [activeTab, setActiveTab] = useState("campaigns");
@@ -93,11 +93,12 @@ const SCStaffDashboard = ({ onLogout }) => {
               <Notifications />
             </Tab.Pane>
             <Tab.Pane eventKey="lookup">
-              <Lookup />
-            </Tab.Pane>
+              <LookupPage />
+           </Tab.Pane>
             <Tab.Pane eventKey="history">
-              <History />
+        <WarrantyHistory />
             </Tab.Pane>
+
           </Tab.Content>
         </div>
       </Tab.Container>

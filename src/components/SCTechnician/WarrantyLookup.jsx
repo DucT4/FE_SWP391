@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Badge, Spinner, Alert } from "react-bootstrap";
-import { Search, Package, ShieldCheck, Info, AlertCircle } from "lucide-react";
+import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Search, ShieldCheck, Package, Info, AlertCircle } from "lucide-react";
 import "../../styles/WarrantyLookup.css";
-import api from "../../config/apiConfig";
+import { getWarrantyLookup } from "../../services/warrantyService"; // ✅ gọi API thật
 
 const WarrantyLookup = () => {
-  const [keyWord, setKeyWord] = useState("");
+  const [vin, setVin] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleLookup = async () => {
-    if (!keyWord.trim()) {
-      setError("Vui lòng nhập mã linh kiện");
+    if (!vin.trim()) {
+      setError("Vui lòng nhập số VIN");
       return;
     }
 
@@ -21,28 +21,14 @@ const WarrantyLookup = () => {
     setResult(null);
 
     try {
-      const res = await api.get("/warranty/lookup", {
-        params: { vin: keyWord.trim() },
-      });
-
-      if (res.status === 200) {
-        console.log("Lookup result:", res.data);
-        setResult(res.data);
-      }
+      const data = await getWarrantyLookup(vin.trim());
+      console.log("📦 Lookup result:", data);
+      setResult(data);
     } catch (err) {
-      console.error("Lỗi lookup:", err);
-      setError(
-        err.response?.data?.message ||
-          "Không tìm thấy thông tin linh kiện. Vui lòng kiểm tra lại mã."
-      );
+      console.error("❌ Lỗi tra cứu:", err);
+      setError("Không tìm thấy thông tin bảo hành hoặc có lỗi xảy ra!");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleLookup();
     }
   };
 
@@ -54,20 +40,19 @@ const WarrantyLookup = () => {
           <Search size={24} className="me-2" />
           Tra cứu thông tin bảo hành linh kiện
         </h4>
-        <p>Nhập mã linh kiện để tra cứu thông tin chi tiết và điều kiện bảo hành</p>
+        <p>Nhập mã VIN để tra cứu thông tin bảo hành hiện tại</p>
       </div>
 
-      {/* Search Box */}
+      {/* Ô tìm kiếm */}
       <div className="lookup-search-box">
-        <label className="lookup-search-label">Mã linh kiện</label>
+        <label className="lookup-search-label">Mã VIN</label>
         <div className="lookup-search-input-group">
           <input
             type="text"
             className="lookup-search-input"
-            placeholder="Ví dụ: BMS-VF8-001"
-            value={keyWord}
-            onChange={(e) => setKeyWord(e.target.value)}
-            onKeyPress={handleKeyPress}
+            placeholder="Ví dụ: VF8ABC1234567890"
+            value={vin}
+            onChange={(e) => setVin(e.target.value)}
           />
           <button
             className="btn-lookup"
@@ -96,7 +81,7 @@ const WarrantyLookup = () => {
         </div>
       </div>
 
-      {/* Error State */}
+      {/* Lỗi */}
       {error && (
         <div className="lookup-error">
           <AlertCircle size={20} />
@@ -104,25 +89,10 @@ const WarrantyLookup = () => {
         </div>
       )}
 
-      {/* Loading State */}
-      {loading && (
-        <div className="lookup-loading">
-          <Spinner animation="border" variant="primary" />
-          <p>Đang tra cứu thông tin...</p>
-        </div>
-      )}
-
-      {/* Result */}
+      {/* Kết quả */}
       {result && !loading && (
-        <div className="lookup-result-card">
-          <div className="lookup-result-header">
-            <h5 className="lookup-part-code">{result.partCode}</h5>
-            <p className="lookup-part-name">{result.partName}</p>
-            <p className="lookup-part-description">{result.description}</p>
-          </div>
-
+        <div className="lookup-result-card mt-4">
           <Row>
-            {/* Thông tin bảo hành */}
             <Col md={6}>
               <div className="lookup-info-card">
                 <h6>
@@ -130,106 +100,62 @@ const WarrantyLookup = () => {
                   Thông tin bảo hành
                 </h6>
 
-                <div className="lookup-info-item">
-                  <span className="lookup-info-label">Thời gian bảo hành:</span>
-                  <span className="lookup-info-value highlight">
-                    {result.warrantyPeriod || "24 tháng"}
-                  </span>
-                </div>
+                <p>
+                  <b>VIN:</b> {result.vin}
+                </p>
+                <p>
+                  <b>Trạng thái:</b>{" "}
+                  {result.active ? (
+                    <span className="text-success">Còn hiệu lực</span>
+                  ) : (
+                    <span className="text-danger">Hết hạn</span>
+                  )}
+                </p>
+                <p>
+                  <b>Ngày tra cứu:</b> {result.asOfDate}
+                </p>
 
-                <p className="lookup-list-title">Điều kiện bảo hành</p>
-                <ul className="lookup-list">
-                  <li>Bảo hành lỗi do nhà sản xuất</li>
-                  <li>Linh kiện chính hãng, còn trong thời hạn</li>
-                  <li>Không có dấu hiệu va chạm hoặc tác động ngoại lực</li>
-                  <li>Sử dụng đúng hướng dẫn của nhà sản xuất</li>
-                </ul>
-
-                <p className="lookup-list-title">Không bảo hành</p>
-                <ul className="lookup-list">
-                  <li>Hư hỏng do va chạm, tai nạn</li>
-                  <li>Sử dụng sai mục đích</li>
-                  <li>Tự ý sửa chữa, thay đổi</li>
-                  <li>Hết thời hạn bảo hành</li>
-                </ul>
+                {result.warnings?.length > 0 && (
+                  <Alert variant="warning" className="mt-2">
+                    <ul>
+                      {result.warnings.map((w, i) => (
+                        <li key={i}>{w}</li>
+                      ))}
+                    </ul>
+                  </Alert>
+                )}
               </div>
             </Col>
 
-            {/* Thông tin kỹ thuật & Quy trình */}
             <Col md={6}>
-              <div className="lookup-info-card mb-3">
+              <div className="lookup-info-card">
                 <h6>
-                  <Package size={20} />
-                  Thông tin kỹ thuật
+                  <Package size={20} /> Gói bảo hành đang hiệu lực
                 </h6>
 
-                <div className="lookup-info-item">
-                  <span className="lookup-info-label">Loại linh kiện:</span>
-                  <span className="lookup-info-value">
-                    {result.type || "Pin"}
-                  </span>
-                </div>
-
-                <div className="lookup-info-item">
-                  <span className="lookup-info-label">Dòng xe tương thích:</span>
-                </div>
-                <div className="compatible-cars">
-                  {result.compatibleCars?.length > 0 ? (
-                    result.compatibleCars.map((car, i) => (
-                      <span key={i} className="car-badge">
-                        {car}
-                      </span>
-                    ))
-                  ) : (
-                    <>
-                      <span className="car-badge">VinFast VF 8</span>
-                      <span className="car-badge">VinFast VF 9</span>
-                    </>
-                  )}
-                </div>
-
-                <div className="lookup-info-item">
-                  <span className="lookup-info-label">Giá tham khảo:</span>
-                  <span className="lookup-info-value">
-                    {result.price
-                      ? result.price.toLocaleString("vi-VN") + " VND"
-                      : "15.000.000 VND"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="lookup-info-card">
-                <h6>Quy trình bảo hành</h6>
-                <ol className="process-steps">
-                  <li>Kiểm tra tình trạng linh kiện và điều kiện bảo hành</li>
-                  <li>Tạo yêu cầu bảo hành trên hệ thống</li>
-                  <li>Chờ phê duyệt từ EVM Staff (1-2 ngày làm việc)</li>
-                  <li>Tiến hành thay thế/sửa chữa sau khi được duyệt</li>
-                  <li>Hoàn thành và cập nhật kết quả lên hệ thống</li>
-                </ol>
+                {result.activeCoverages?.length > 0 ? (
+                  <ul>
+                    {result.activeCoverages.map((c, i) => (
+                      <li key={i}>
+                        <b>{c.partCategory}</b> ({c.startDate} → {c.endDate})<br />
+                        Giới hạn km: {c.mileageLimit || "Không giới hạn"}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>Không có gói bảo hành nào đang hoạt động.</p>
+                )}
               </div>
             </Col>
           </Row>
 
-          <div className="lookup-info-note">
+          <div className="lookup-info-note mt-3">
             <Info size={18} />
             <span>
-              <strong>Lưu ý:</strong> Thông tin bảo hành có thể thay đổi theo chính sách của nhà sản xuất. 
-              Vui lòng liên hệ với quản lý để biết thêm chi tiết.
+              <strong>Lưu ý:</strong> Dữ liệu hiển thị theo thời điểm tra cứu
+              (asOfDate). Các gói bảo hành sắp hết hạn sẽ được cảnh báo.
             </span>
           </div>
-        </div>
-      )}
-
-      {/* Empty State */}
-      {!result && !loading && !error && keyWord === "" && (
-        <div className="lookup-empty-state">
-          <Search size={80} />
-          <h5>Tra cứu thông tin bảo hành</h5>
-          <p>
-            Nhập mã linh kiện vào ô tìm kiếm phía trên để xem thông tin chi tiết
-            về điều kiện bảo hành, thông số kỹ thuật và quy trình xử lý.
-          </p>
         </div>
       )}
     </Container>

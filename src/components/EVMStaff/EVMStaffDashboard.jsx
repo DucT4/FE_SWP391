@@ -12,7 +12,7 @@ import "../../styles/EVMStaffDashboard.css";
 import EVMWarrantyApproval from "./EVMWarrantyApproval";
 import WarrantyLookup from "../SCTechnician/WarrantyLookup";
 import Inventory from "../Shared/Inventory";
-import History from "../Shared/History";
+import WarrantyHistory from "../Shared/WarrantyHistory";
 import authService from "../../services/authService";
 
 const EVMStaffDashboard = ({ onLogout }) => {
@@ -95,8 +95,9 @@ const EVMStaffDashboard = ({ onLogout }) => {
               <Inventory />
             </Tab.Pane>
             <Tab.Pane eventKey="history">
-              <History role="EVM_STAFF" />
+      <WarrantyHistory role="EVM_Staff" />
             </Tab.Pane>
+
           </Tab.Content>
         </div>
       </Tab.Container>

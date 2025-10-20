@@ -1,39 +1,54 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button, Modal, Form, Spinner } from "react-bootstrap";
 import { Plus, FileText } from "lucide-react";
+import toast from "react-hot-toast";
+import { createClaim, getClaimsByTechnician } from "../../services/claimService";
 import "../../styles/Claims.css";
 
 const ClaimsTab = () => {
   const [showModal, setShowModal] = useState(false);
+  const [claims, setClaims] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    workOrder: "",
-    recallOrder: "",
-    workDescription: "",
-    partCode: "",
-    cost: "",
-    startTime: "",
-    endTime: "",
-    note: "",
+    vin: "",
+    failureDesc: "",
+    serviceCenterId: 1,
   });
 
-  // Mock data - Claims đã tạo
-  const claims = [
-    {
-      id: "CL002",
-      status: "approved",
-      statusText: "Đã duyệt",
-      title: "Kiểm tra và bảo dưỡng định kỳ",
-      partCode: "MAINT-001",
-      cost: "3.000.000 VND",
-      createdDate: "20/9/2024",
-      timeRange: "08:00:00 20/9/2024 - 12:00:00 20/9/2024",
-      note: "Bảo dưỡng định kỳ 10,000km",
-    },
-  ];
+  const user = JSON.parse(localStorage.getItem("user"));
+  const technicianId = user?.userId || user?.id;
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  // ✅ Load claims của technician
+  const loadClaims = async () => {
+    try {
+      setLoading(true);
+      const res = await getClaimsByTechnician(technicianId);
 
+      console.log("📦 API trả về (claims):", res);
+
+      // ✅ Đảm bảo luôn là mảng để tránh lỗi filter
+      if (Array.isArray(res)) {
+        setClaims(res);
+      } else if (res && Array.isArray(res.data)) {
+        setClaims(res.data);
+      } else {
+        console.warn("⚠️ API không trả về mảng hợp lệ:", res);
+        setClaims([]);
+      }
+    } catch (err) {
+      console.error("❌ Lỗi tải danh sách claim:", err);
+      toast.error("Không thể tải danh sách claim!");
+      setClaims([]); // fallback để tránh lỗi filter
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadClaims();
+  }, []);
+
+  // ✅ Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -42,26 +57,44 @@ const ClaimsTab = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // ✅ Submit tạo claim mới
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
-    handleClose();
-    // Reset form
-    setFormData({
-      workOrder: "",
-      recallOrder: "",
-      workDescription: "",
-      partCode: "",
-      cost: "",
-      startTime: "",
-      endTime: "",
-      note: "",
-    });
+    if (!formData.vin || !formData.failureDesc) {
+      toast.error("Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
+
+    try {
+      await createClaim(formData.vin, formData.failureDesc, formData.serviceCenterId);
+      toast.success("Tạo claim thành công!");
+      setShowModal(false);
+      setFormData({ vin: "", failureDesc: "", serviceCenterId: 1 });
+      loadClaims(); // reload danh sách
+    } catch (err) {
+      console.error("❌ Lỗi tạo claim:", err);
+      toast.error("Không thể tạo claim!");
+    }
   };
 
-  const renderStatusBadge = (status, text) => {
-    return <span className={`claim-status-badge ${status}`}>{text}</span>;
+  // ✅ Badge trạng thái
+  const renderStatusBadge = (status) => {
+    switch (status) {
+      case "DRAFT":
+        return <span className="claim-status-badge waiting">Chờ duyệt</span>;
+      case "APPROVED":
+        return <span className="claim-status-badge approved">Đã duyệt</span>;
+      case "REJECTED":
+        return <span className="claim-status-badge rejected">Từ chối</span>;
+      default:
+        return <span className="claim-status-badge">{status}</span>;
+    }
+  };
+
+  // ✅ Đếm theo trạng thái (đảm bảo không crash)
+  const countByStatus = (status) => {
+    const safeClaims = Array.isArray(claims) ? claims : [];
+    return safeClaims.filter((c) => c.status === status).length;
   };
 
   return (
@@ -71,210 +104,122 @@ const ClaimsTab = () => {
         <Col md={4}>
           <div className="claims-stat-card">
             <h6>Chờ duyệt</h6>
-            <div className="stat-number">0</div>
+            <div className="stat-number">{countByStatus("DRAFT")}</div>
           </div>
         </Col>
         <Col md={4}>
           <div className="claims-stat-card">
             <h6>Đã duyệt</h6>
-            <div className="stat-number">1</div>
+            <div className="stat-number">{countByStatus("APPROVED")}</div>
           </div>
         </Col>
         <Col md={4}>
           <div className="claims-stat-card">
             <h6>Từ chối</h6>
-            <div className="stat-number">0</div>
+            <div className="stat-number">{countByStatus("REJECTED")}</div>
           </div>
         </Col>
       </Row>
 
-      {/* Claims Section */}
+      {/* Header */}
       <div className="claims-section-header">
         <div>
           <h5>Claims (Báo cáo chi phí)</h5>
-          <p className="claims-section-subtitle">
-            Báo cáo chi phí công việc đã hoàn thành
-          </p>
+          <p className="claims-section-subtitle">Danh sách các claim đã tạo</p>
         </div>
-        <Button className="btn-create-claim" onClick={handleShow}>
+        <Button className="btn-create-claim" onClick={() => setShowModal(true)}>
           <Plus size={16} /> Tạo Claim
         </Button>
       </div>
 
-      {claims.length > 0 ? (
+      {/* Loading */}
+      {loading && (
+        <div className="text-center py-5">
+          <Spinner animation="border" variant="primary" />
+          <p className="text-muted mt-2">Đang tải dữ liệu...</p>
+        </div>
+      )}
+
+      {/* Claims list */}
+      {!loading && Array.isArray(claims) && claims.length > 0 ? (
         claims.map((claim) => (
           <div key={claim.id} className="claim-item-card">
             <div className="claim-item-header">
               <div className="claim-id-badge">
-                {claim.id}
-                {renderStatusBadge(claim.status, claim.statusText)}
+                CL{claim.id}
+                {renderStatusBadge(claim.status)}
               </div>
             </div>
 
-            <h6 className="claim-item-title">{claim.title}</h6>
-            <p className="claim-item-subtitle">Mã phụ tùng: {claim.partCode}</p>
+            <h6 className="claim-item-title">
+              {claim.failureDesc || "Không có mô tả"}
+            </h6>
 
             <div className="claim-item-details">
               <div className="claim-detail-item">
-                <span className="claim-detail-label">Chi phí:</span>
-                <span className="claim-detail-value highlight">{claim.cost}</span>
+                <span className="claim-detail-label">VIN:</span>
+                <span className="claim-detail-value">{claim.vin}</span>
+              </div>
+              <div className="claim-detail-item">
+                <span className="claim-detail-label">Trung tâm:</span>
+                <span className="claim-detail-value">{claim.serviceCenterName || "—"}</span>
               </div>
               <div className="claim-detail-item">
                 <span className="claim-detail-label">Ngày tạo:</span>
-                <span className="claim-detail-value">{claim.createdDate}</span>
-              </div>
-              <div className="claim-detail-item">
-                <span className="claim-detail-label">Thời gian:</span>
-                <span className="claim-detail-value">{claim.timeRange}</span>
+                <span className="claim-detail-value">
+                  {claim.createdAt
+                    ? new Date(claim.createdAt).toLocaleString("vi-VN")
+                    : "—"}
+                </span>
               </div>
             </div>
-
-            {claim.note && (
-              <div className="claim-item-note">
-                <strong>Ghi chú:</strong> {claim.note}
-              </div>
-            )}
           </div>
         ))
       ) : (
-        <div className="claims-empty-state">
-          <FileText />
-          <h5>Chưa có báo cáo chi phí</h5>
-          <p>Tạo claim mới để báo cáo chi phí công việc</p>
-        </div>
+        !loading && (
+          <div className="claims-empty-state">
+            <FileText />
+            <h5>Chưa có claim nào</h5>
+            <p>Tạo claim mới để bắt đầu</p>
+          </div>
+        )
       )}
 
-      {/* Create Claim Modal */}
-      <Modal show={showModal} onHide={handleClose} size="lg" className="claim-modal">
+      {/* Modal tạo claim */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Tạo Claim mới</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="text-muted mb-3">Báo cáo chi tiết công việc đã hoàn thành</p>
           <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Công việc bảo hành <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Select
-                    name="workOrder"
-                    value={formData.workOrder}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Chọn công việc (nếu có)</option>
-                    <option value="WO001">WO001 - Thay thế module BMS</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Đơn Recall</Form.Label>
-                  <Form.Select
-                    name="recallOrder"
-                    value={formData.recallOrder}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Chọn đơn recall (nếu có)</option>
-                    <option value="RO001">RO001 - Cập nhật firmware BMS</option>
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-            </Row>
-
             <Form.Group className="mb-3">
-              <Form.Label>
-                Mô tả công việc đã thực hiện <span className="text-danger">*</span>
-              </Form.Label>
+              <Form.Label>VIN</Form.Label>
               <Form.Control
-                as="textarea"
-                rows={3}
-                name="workDescription"
-                value={formData.workDescription}
+                type="text"
+                name="vin"
+                value={formData.vin}
                 onChange={handleInputChange}
-                placeholder="Mô tả chi tiết công việc đã thực hiện"
+                placeholder="VD: VF3XYZ9876543210"
               />
             </Form.Group>
-
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Mã phụ tùng <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="partCode"
-                    value={formData.partCode}
-                    onChange={handleInputChange}
-                    placeholder="VD: BMS-VF8-001"
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Chi phí (VND) <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="cost"
-                    value={formData.cost}
-                    onChange={handleInputChange}
-                    placeholder="Nhập chi phí"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Thời gian bắt đầu <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="datetime-local"
-                    name="startTime"
-                    value={formData.startTime}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Thời gian kết thúc <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="datetime-local"
-                    name="endTime"
-                    value={formData.endTime}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
             <Form.Group className="mb-3">
-              <Form.Label>Ghi chú</Form.Label>
+              <Form.Label>Mô tả lỗi</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}
-                name="note"
-                value={formData.note}
+                name="failureDesc"
+                value={formData.failureDesc}
                 onChange={handleInputChange}
-                placeholder="Thông tin bổ sung (nếu có)"
+                placeholder="VD: Xe bị lỗi cảm biến nhiệt độ"
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" className="btn-cancel" onClick={handleClose}>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
             Hủy
           </Button>
-          <Button className="btn-submit-claim" onClick={handleSubmit}>
+          <Button variant="dark" onClick={handleSubmit}>
             Tạo Claim
           </Button>
         </Modal.Footer>

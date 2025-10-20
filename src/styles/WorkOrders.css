@@ -1,242 +1,120 @@
-/* Work Orders (Công việc) Tab Styles */
-.work-orders-container {
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.work-container {
+  padding: 24px;
+  background: #f9fafb;
+  min-height: 100vh;
 }
 
-/* Stats Cards */
-.stats-row {
-  margin-bottom: 2rem;
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+/* --- Thống kê --- */
+.stats-box {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 28px;
 }
 
 .stat-card {
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 1.5rem;
-  border: 1px solid #e9ecef;
-  transition: transform 0.2s ease;
+  flex: 1;
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.stat-card h6 {
-  color: #6c757d;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-}
-
-.stat-card .stat-number {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #212529;
-  line-height: 1;
-}
-
-/* Work Items Section */
-.work-section {
-  margin-bottom: 2rem;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #e9ecef;
-}
-
-.section-header h5 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #212529;
+.stat-card h4 {
   margin: 0;
+  font-size: 14px;
+  color: #475569;
 }
 
-.section-subtitle {
-  color: #6c757d;
-  font-size: 0.9rem;
+.stat-card p {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 2px 0 0 0;
 }
 
-/* Work Item Card */
-.work-item-card {
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  background: white;
-  transition: all 0.2s ease;
+.stat-card.assigned {
+  background: #eff6ff;
+  color: #1d4ed8;
 }
 
-.work-item-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-color: #dee2e6;
+.stat-card.inprogress {
+  background: #fefce8;
+  color: #ca8a04;
 }
 
-.work-item-header {
+.stat-card.completed {
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+/* --- Danh sách công việc --- */
+.repair-card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  margin-bottom: 16px;
+  border-left: 6px solid #d1d5db;
+}
+
+.repair-card.pending { border-color: #60a5fa; }
+.repair-card.in_progress { border-color: #facc15; }
+.repair-card.completed { border-color: #22c55e; }
+
+.repair-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-
-.work-id-badge {
-  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+}
+
+.status-label {
+  padding: 4px 10px;
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 13px;
 }
 
-.status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
+.status-label.pending { background: #e0f2fe; color: #0369a1; }
+.status-label.in_progress { background: #fef9c3; color: #854d0e; }
+.status-label.completed { background: #dcfce7; color: #15803d; }
 
-.status-badge.in-progress {
-  background-color: #cfe2ff;
-  color: #084298;
-}
-
-.status-badge.completed {
-  background-color: #d1e7dd;
-  color: #0f5132;
-}
-
-.status-badge.pending {
-  background-color: #fff3cd;
-  color: #997404;
-}
-
-.work-item-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #212529;
-  margin-bottom: 0.5rem;
-}
-
-.work-item-subtitle {
-  color: #6c757d;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.work-item-details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.75rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e9ecef;
-}
-
-.detail-item {
+.actions {
+  margin-top: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  gap: 10px;
 }
 
-.detail-label {
-  font-size: 0.85rem;
-  color: #6c757d;
-}
-
-.detail-value {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #212529;
-}
-
-.detail-value.highlight {
-  color: #198754;
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
   font-weight: 600;
-}
-
-.work-item-note {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  color: #495057;
-}
-
-.work-item-note strong {
-  color: #212529;
-  margin-right: 0.25rem;
-}
-
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.btn-action {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 500;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.btn-action.btn-primary {
-  background-color: #0d6efd;
-  border: none;
-}
+.btn.start { background: #2563eb; color: #fff; }
+.btn.complete { background: #22c55e; color: #fff; }
+.btn.cancel { background: #ef4444; color: #fff; }
 
-.btn-action.btn-primary:hover {
-  background-color: #0b5ed7;
-}
+.btn:hover { opacity: 0.9; }
 
-.btn-action.btn-outline-secondary {
-  border: 1px solid #6c757d;
-  color: #6c757d;
-}
-
-.btn-action.btn-outline-secondary:hover {
-  background-color: #6c757d;
-  color: white;
-}
-
-/* Empty State */
-.empty-state {
+.empty {
   text-align: center;
-  padding: 3rem 1rem;
-  color: #6c757d;
-}
-
-.empty-state svg {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 1rem;
-  opacity: 0.5;
-}
-
-.empty-state h5 {
-  color: #495057;
-  margin-bottom: 0.5rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .work-item-details {
-    grid-template-columns: 1fr;
-  }
-
-  .action-buttons {
-    flex-direction: column;
-  }
-
-  .stat-card .stat-number {
-    font-size: 1.5rem;
-  }
+  margin-top: 60px;
+  color: #6b7280;
 }

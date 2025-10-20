@@ -13,8 +13,8 @@ import "../../styles/SCTechnicianDashboard.css";
 import WorkOrders from "./WorkOrders";
 import RecallOrdersTab from "./RecallOrdersTab";
 import ClaimsTab from "./ClaimsTab";
+import WarrantyHistory from "../Shared/WarrantyHistory";
 import WarrantyLookup from "./WarrantyLookup";
-import History from "../Shared/History";
 import Inventory from "../Shared/Inventory";
 import authService from "../../services/authService";
 
@@ -111,10 +111,10 @@ const SCTechnicianDashboard = ({ onLogout }) => {
             </Tab.Pane>
             <Tab.Pane eventKey="warranty-lookup">
               <WarrantyLookup />
-            </Tab.Pane>
+             </Tab.Pane>
             <Tab.Pane eventKey="history">
-              <History role="SC_TECHNICIAN" />
-            </Tab.Pane>
+            <WarrantyHistory />
+              </Tab.Pane>
             <Tab.Pane eventKey="inventory">
               <Inventory />
             </Tab.Pane>

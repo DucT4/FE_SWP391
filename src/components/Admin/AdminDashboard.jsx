@@ -4,7 +4,7 @@ import { Users, Bell, DollarSign, Clock, Search, LogOut } from "lucide-react";
 import AdminAccountManagement from "./AdminAccountManagement";
 import AdminNotifications from "./AdminNotifications";
 import AdminFinance from "./AdminFinance";
-import History from "../Shared/History";
+import WarrantyHistory from "../Shared/WarrantyHistory";
 import WarrantyLookup from "../SCTechnician/WarrantyLookup";
 import authService from "../../services/authService";
 import "../../styles/AdminDashboard.css";
@@ -81,10 +81,10 @@ const AdminDashboard = ({ onLogout }) => {
             </Tab.Pane>
             <Tab.Pane eventKey="finance">
               <AdminFinance />
-            </Tab.Pane>
+            </Tab.Pane> 
             <Tab.Pane eventKey="history">
-              <History />
-            </Tab.Pane>
+          <WarrantyHistory />
+              </Tab.Pane>
             <Tab.Pane eventKey="lookup">
               <WarrantyLookup />
             </Tab.Pane>
