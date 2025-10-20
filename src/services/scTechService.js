@@ -1,9 +1,24 @@
+// ✅ Lấy chi tiết công việc bảo hành theo id
+export const getRepairDetail = async (repairId) => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(`${API_BASE_URL}/warranty/repairs/${repairId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.error("❌ Lỗi khi lấy chi tiết công việc bảo hành:", error);
+    throw error;
+  }
+};
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
 // ✅ Lấy danh sách công việc bảo hành của kỹ thuật viên
-export const getRepairsByTech = async (techId: number) => {
+export const getRepairsByTech = async (techId) => {
   try {
     const token = localStorage.getItem("token");
     const res = await axios.get(`${API_BASE_URL}/warranty/repairs/technician/${techId}`, {
@@ -21,9 +36,9 @@ export const getRepairsByTech = async (techId: number) => {
 
 // ✅ Cập nhật trạng thái ca sửa
 export const updateRepairStatus = async (
-  repairId: number,
-  status: string,
-  remark?: string
+  repairId,
+  status,
+  remark
 ) => {
   try {
     const res = await axios.put(
@@ -45,7 +60,7 @@ export const updateRepairStatus = async (
 };
 
 // ✅ Gửi yêu cầu thực hiện bảo hành (Technician POST)
-export const performRepair = async (payload: any) => {
+export const performRepair = async (payload) => {
   try {
     const res = await axios.post(`${API_BASE_URL}/warranty/repairs`, payload, {
       headers: {
