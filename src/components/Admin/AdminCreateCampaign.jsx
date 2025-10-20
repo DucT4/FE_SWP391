@@ -3,12 +3,15 @@ import { Modal, Form, Button } from "react-bootstrap";
 import { createCampaign } from "../../services/Campaign";
 
 const initialState = {
-  type: "Recall",
-  name: "",
-  description: "",
-  startDate: "",
-  endDate: "",
-  status: "Planned"
+  id: "",
+  campaignId: "",
+  vin: "",
+  staffId: "",
+  performedDate: "",
+  workDescription: "",
+  technicianName: "",
+  createdAt: "",
+  campaignPayments: ""
 };
 
 function AdminCreateCampaign({ show, onClose, onCreated }) {
@@ -25,12 +28,15 @@ function AdminCreateCampaign({ show, onClose, onCreated }) {
     setLoading(true);
     try {
       await createCampaign({
-        type: formData.type,
-        name: formData.name,
-        description: formData.description,
-        startDate: formData.startDate,
-        endDate: formData.endDate,
-        status: formData.status
+        id: formData.id,
+        campaignId: formData.campaignId,
+        vin: formData.vin,
+        staffId: formData.staffId,
+        performedDate: formData.performedDate,
+        workDescription: formData.workDescription,
+        technicianName: formData.technicianName,
+        createdAt: formData.createdAt,
+        campaignPayments: formData.campaignPayments
       });
       setFormData(initialState);
       if (onCreated) onCreated();
@@ -45,66 +51,105 @@ function AdminCreateCampaign({ show, onClose, onCreated }) {
   return (
     <Modal show={show} onHide={onClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Tạo chiến dịch Recall mới</Modal.Title>
+        <Modal.Title>Tạo công việc chiến dịch</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
           <Form.Group className="mb-3">
-            <Form.Label>Loại chiến dịch <span style={{color: 'red'}}>*</span></Form.Label>
-            <Form.Select name="type" value={formData.type} onChange={handleChange} required>
-              <option value="Recall">Recall</option>
-              <option value="Service">Service</option>
-            </Form.Select>
+            <Form.Label>ID</Form.Label>
+            <Form.Control
+              type="number"
+              name="id"
+              value={formData.id}
+              onChange={handleChange}
+              placeholder="ID (auto hoặc nhập nếu cần)"
+            />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Tên chiến dịch <span style={{color: 'red'}}>*</span></Form.Label>
+            <Form.Label>Campaign ID</Form.Label>
+            <Form.Control
+              type="number"
+              name="campaignId"
+              value={formData.campaignId}
+              onChange={handleChange}
+              placeholder="ID chiến dịch liên quan"
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>VIN</Form.Label>
             <Form.Control
               type="text"
-              name="name"
-              value={formData.name}
+              name="vin"
+              value={formData.vin}
               onChange={handleChange}
-              placeholder="Nhập tên chiến dịch"
+              placeholder="Nhập mã VIN xe"
               required
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Mô tả</Form.Label>
+            <Form.Label>Staff ID</Form.Label>
+            <Form.Control
+              type="number"
+              name="staffId"
+              value={formData.staffId}
+              onChange={handleChange}
+              placeholder="ID nhân viên thực hiện"
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Ngày thực hiện</Form.Label>
+            <Form.Control
+              type="date"
+              name="performedDate"
+              value={formData.performedDate}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Mô tả công việc</Form.Label>
             <Form.Control
               as="textarea"
-              rows={3}
-              name="description"
-              value={formData.description}
+              rows={2}
+              name="workDescription"
+              value={formData.workDescription}
               onChange={handleChange}
-              placeholder="Nhập mô tả chiến dịch"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Ngày bắt đầu <span style={{color: 'red'}}>*</span></Form.Label>
-            <Form.Control
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
+              placeholder="Nhập mô tả công việc"
               required
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Ngày kết thúc <span style={{color: 'red'}}>*</span></Form.Label>
+            <Form.Label>Tên kỹ thuật viên</Form.Label>
             <Form.Control
-              type="date"
-              name="endDate"
-              value={formData.endDate}
+              type="text"
+              name="technicianName"
+              value={formData.technicianName}
               onChange={handleChange}
+              placeholder="Nhập tên kỹ thuật viên"
               required
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Trạng thái <span style={{color: 'red'}}>*</span></Form.Label>
-            <Form.Select name="status" value={formData.status} onChange={handleChange} required>
-              <option value="Planned">Lên kế hoạch</option>
-              <option value="Active">Đang triển khai</option>
-              <option value="Closed">Đã kết thúc</option>
-            </Form.Select>
+            <Form.Label>Ngày tạo</Form.Label>
+            <Form.Control
+              type="datetime-local"
+              name="createdAt"
+              value={formData.createdAt}
+              onChange={handleChange}
+              placeholder="Ngày tạo bản ghi (nếu cần)"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Thông tin thanh toán chiến dịch</Form.Label>
+            <Form.Control
+              type="text"
+              name="campaignPayments"
+              value={formData.campaignPayments}
+              onChange={handleChange}
+              placeholder="Thông tin thanh toán (nếu có)"
+            />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

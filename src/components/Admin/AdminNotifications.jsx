@@ -5,11 +5,6 @@ import AdminCreateCampaign from "./AdminCreateCampaign";
 import "../../styles/AdminNotifications.css";
 
 const AdminNotifications = () => {
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-  });
   const [showCreateCampaign, setShowCreateCampaign] = useState(false);
 
   // Mock data - Lịch sử thông báo
