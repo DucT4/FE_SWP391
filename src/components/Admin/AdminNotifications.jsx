@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Container, Button, Modal, Form } from "react-bootstrap";
-import { Bell, Plus } from "lucide-react";
+import { Bell, Plus, Flag } from "lucide-react";
+import AdminCreateCampaign from "./AdminCreateCampaign";
 import "../../styles/AdminNotifications.css";
 
 const AdminNotifications = () => {
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-  });
+  const [showCreateCampaign, setShowCreateCampaign] = useState(false);
 
   // Mock data - Lịch sử thông báo
   const notifications = [
@@ -74,13 +71,16 @@ const AdminNotifications = () => {
             Tạo và gửi thông báo tới tất cả nhân viên trung tâm dịch vụ
           </p>
         </div>
-        <Button
-          className="btn-create-notification"
-          onClick={handleCreateNotification}
-        >
-          <Plus size={18} />
-          Tạo thông báo mới
-        </Button>
+        <div className="d-flex gap-2">
+          <Button
+            className="btn-create-notification"
+            variant="success"
+            onClick={() => setShowCreateCampaign(true)}
+          >
+            <Flag size={18} />
+            Tạo chiến dịch Recall
+          </Button>
+        </div>
       </div>
 
       {/* Notification History */}
@@ -106,58 +106,12 @@ const AdminNotifications = () => {
         ))}
       </div>
 
-      {/* Create Notification Modal */}
-      <Modal
-        show={showCreateModal}
-        onHide={handleCloseModal}
-        size="lg"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Tạo thông báo mới</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p className="text-muted mb-3">Gửi thông báo đến SC Staff</p>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Tiêu đề <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                placeholder="Nhập tiêu đề thông báo"
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Nội dung <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={5}
-                name="content"
-                value={formData.content}
-                onChange={handleInputChange}
-                placeholder="Nhập nội dung thông báo"
-                required
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Hủy
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Gửi thông báo
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {/* Create Campaign Recall Modal */}
+      <AdminCreateCampaign
+        show={showCreateCampaign}
+        onClose={() => setShowCreateCampaign(false)}
+        onCreated={() => setShowCreateCampaign(false)}
+      />
     </Container>
   );
 };
